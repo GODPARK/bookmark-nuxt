@@ -1,89 +1,106 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div>
+      <v-row>
+        <v-col :cols="mainHashCardCols">
+          <v-card
+            v-if="!isEmptyMainHashList"
+            :height="mainHashCardHeight"
+            class="main-card-view"
+            :loading="mainHashLoadingBool"
+            outlined
           >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
+            <v-card-actions>
+              <v-spacer />
+              <v-btn small text @click="getMainHashListFunc()">
+                <v-icon>mdi-refresh</v-icon>
+              </v-btn>
+            </v-card-actions>
+            <hash-list-comp />
+          </v-card>
+        </v-col>
+        <v-col>
+          <v-card
+            v-if="!isEmptyMainBookmarkList"
+            :height="mainBookmarkCardHeight"
+            class="main-card-view"
+            outlined
           >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+            <bookmark-list-comp />
+          </v-card>
+        </v-col>
+      </v-row>
+    </div>
 </template>
-
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
+import HashListComp from '../components/hash/HashListComp'
+import BookmarkListComp from '../components/bookmark/BookmarkListComp'
 
 export default {
+  name: 'Main',
   components: {
-    Logo,
-    VuetifyLogo
+    HashListComp,
+    BookmarkListComp
+  },
+  props: [],
+  data () {
+    return {
+      mainHashLoadingBool: false
+    }
+  },
+  computed: {
+    mainHashCardCols () {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return 12
+        case 'sm': return 12
+        case 'md': return 12
+        case 'lg': return 3
+        case 'xl': return 3
+      }
+      return 12
+    },
+    mainHashCardHeight () {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return 200
+        case 'sm': return 200
+        case 'md': return 300
+        case 'lg': return this.$vuetify.breakpoint.height - 100
+        case 'xl': return this.$vuetify.breakpoint.height - 100
+      }
+      return 300
+    },
+    mainBookmarkCardHeight () {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return undefined
+        case 'sm': return undefined
+        case 'md': return undefined
+        case 'lg': return this.$vuetify.breakpoint.height - 100
+        case 'xl': return this.$vuetify.breakpoint.height - 100
+      }
+      return undefined
+    },
+    isEmptyMainHashList () {
+      return this.$store.getters['view-hash/isEmptyHashList']
+    },
+    isEmptyMainBookmarkList () {
+      return this.$store.getters['view-bookmark/isEmptyBookmarkList']
+    }
+  },
+  mounted () {
+    this.getMainHashListFunc()
+  },
+  methods: {
+    async getMainHashListFunc () {
+      this.mainHashLoading = true
+      const hashList = await this.$store.dispatch('api-v1-hash/mainHash')
+      this.$store.commit('view-hash/setHashList', hashList)
+      this.mainHashLoading = false
+    }
   }
 }
 </script>
+<style scoped>
+.main-card-view {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+</style>
