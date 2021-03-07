@@ -103,7 +103,7 @@ export default {
       this.$store.commit('auth/setAccount', { account: '' })
       this.$store.commit('auth/setToken', { token: '' })
       alert('로그 아웃 되었습니다.')
-      await this.$router.push('/')
+      location.reload()
     }
   }
 }

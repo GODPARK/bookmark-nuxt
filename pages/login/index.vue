@@ -1,8 +1,8 @@
 <template>
     <div>
         <v-container>
-            <v-row>
-                <v-col>
+            <v-row justify="center" align="center">
+                <v-col align-self="center">
                     <v-card>
                         <v-card-title>
                             Login
