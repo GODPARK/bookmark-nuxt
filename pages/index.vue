@@ -19,6 +19,7 @@
           </v-card>
         </v-col>
         <v-col>
+          <hash-info class="hash-card-class" />
           <v-card
             v-if="!isEmptyMainBookmarkList"
             :height="mainBookmarkCardHeight"
@@ -34,12 +35,14 @@
 <script>
 import HashListComp from '../components/hash/HashListComp'
 import BookmarkListComp from '../components/bookmark/BookmarkListComp'
+import HashInfo from '../components/hash/HashInfo'
 
 export default {
   name: 'Main',
   components: {
     HashListComp,
-    BookmarkListComp
+    BookmarkListComp,
+    HashInfo
   },
   props: [],
   data () {
@@ -68,8 +71,8 @@ export default {
     mainHashCardHeight () {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs': return 200
-        case 'sm': return 200
-        case 'md': return 300
+        case 'sm': return 350
+        case 'md': return 350
         case 'lg': return this.$vuetify.breakpoint.height - 100
         case 'xl': return this.$vuetify.breakpoint.height - 100
       }
@@ -113,5 +116,9 @@ export default {
 .main-card-view {
   overflow-y: scroll;
   overflow-x: hidden;
+}
+.hash-card-class {
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
 </style>

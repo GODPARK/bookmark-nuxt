@@ -15,7 +15,7 @@
                             :elevation="hover ? 8 : 3"
                         >
                             <div class="bookmark-card-title">
-                                <v-card-title @click="testB(bookmark)">
+                                <v-card-title @click="clickBookmark(bookmark)">
                                     <strong>{{ bookmark.bookmarkName }}</strong>
                                 </v-card-title>
                                 <v-card-text class="bookmark-card-text">
@@ -60,7 +60,7 @@ export default {
       bookmarkCardCols () {
         switch (this.$vuetify.breakpoint.name) {
             case 'xs': return 12
-            case 'sm': return 12
+            case 'sm': return 6
             case 'md': return 6
             case 'lg': return 4
             case 'xl': return 4
@@ -71,8 +71,9 @@ export default {
   mounted () {
   },
   methods: {
-      testB (bookmark) {
-          console.log(bookmark)
+      clickBookmark (bookmark) {
+          window.open(bookmark.url, '_blank')
+          this.$store.dispatch('api-v1-bookmark/frequencyBookmark', bookmark.bookmarkId)
       }
   }
 }

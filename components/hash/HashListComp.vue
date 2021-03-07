@@ -51,7 +51,7 @@ export default {
       hashCardCols () {
         switch (this.$vuetify.breakpoint.name) {
           case 'xs': return 12
-          case 'sm': return 12
+          case 'sm': return 4
           case 'md': return 4
           case 'lg': return 12
           case 'xl': return 12
@@ -68,6 +68,7 @@ export default {
       async clickHashFunc (hash) {
         const data = await this.$store.dispatch('api-v1-bookmark/bookmarkByHash', hash.hashId)
         this.$store.commit('view-bookmark/setBookmarkList', data)
+        this.$store.commit('view-hash/setSelectedHash', hash)
       }
   }
 }
