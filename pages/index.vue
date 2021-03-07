@@ -48,6 +48,13 @@ export default {
     }
   },
   computed: {
+    isLoginComp () {
+      if (this.$store.getters['auth/getToken']) {
+        return false
+      } else {
+        return true
+      }
+    },
     mainHashCardCols () {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs': return 12
@@ -86,7 +93,11 @@ export default {
     }
   },
   mounted () {
-    this.getMainHashListFunc()
+    if (this.isLoginComp) {
+      this.$router.push('/login')
+    } else {
+      this.getMainHashListFunc()
+    }
   },
   methods: {
     async getMainHashListFunc () {
