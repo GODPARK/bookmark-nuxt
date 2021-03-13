@@ -1,5 +1,6 @@
 export const state = () => ({
-    bookmarkList: []
+    bookmarkList: [],
+    selectedBookmark: {}
 })
 
 export const getters = {
@@ -15,6 +16,9 @@ export const getters = {
         } else {
             return true
         }
+    },
+    getSelectedBookmark (state) {
+        return state.selectedBookmark
     }
 }
 
@@ -27,6 +31,9 @@ export const mutations = {
     },
     clearBookmarkList (state) {
         state.bookmarkList = []
+    },
+    setSelectedBookmark (state, value) {
+        state.selectedBookmark = value
     }
 }
 

@@ -25,5 +25,15 @@ export const actions = {
         } catch (err) {
             console.log('bookmark freqeucy api is fail')
         }
+    },
+    async editBookmark (context, body) {
+        let data = {}
+        try {
+            await this.$axios.setHeader('auth_token', context.rootGetters['auth/getToken'])
+            data = await this.$axios.$patch('/api/v1/bookmark', body)
+        } catch (err) {
+            data.err = 'edit bookmark is fail'
+        }
+        return data
     }
 }

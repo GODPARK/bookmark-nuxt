@@ -25,7 +25,7 @@
                             <v-divider />
                             <v-card-actions>
                                 <v-spacer />
-                                <v-btn text small>
+                                <v-btn text small @click="clickEditBookmark(bookmark)">
                                     <v-icon>
                                         mdi-book-edit-outline
                                     </v-icon>
@@ -41,12 +41,18 @@
                 </v-col>
             </v-row>
         </v-container>
+        <div>
+            <bookmark-dialog-comp ref="bookamrkDialog" />
+        </div>
     </div>
 </template>
 <script>
+import BookmarkDialogComp from './BookmarkDialogComp'
+
 export default {
-  name: 'Sample',
+  name: 'BookmarkListComp',
   components: {
+    BookmarkDialogComp
   },
   props: [],
   data () {
@@ -74,6 +80,10 @@ export default {
       clickBookmark (bookmark) {
           window.open(bookmark.url, '_blank')
           this.$store.dispatch('api-v1-bookmark/frequencyBookmark', bookmark.bookmarkId)
+      },
+      clickEditBookmark (bookmark) {
+          this.$store.commit('view-bookmark/setSelectedBookmark', bookmark)
+          this.$refs.bookamrkDialog.openBookmarkDialogFunc()
       }
   }
 }

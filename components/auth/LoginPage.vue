@@ -44,9 +44,11 @@ export default {
       async loginFunc () {
           const response = await this.$store.dispatch('api-v1-auth/signIn', { account: this.account, password: this.password })
           if (response) {
-              await this.$store.commit('auth/setToken', response)
-              await this.$store.commit('auth/setAccount', response)
-              alert(`${response.account} 님 환영합니다.`)
+              if (response.token !== undefined && response.account !== undefined) {
+                  await this.$store.commit('auth/setToken', response)
+                  await this.$store.commit('auth/setAccount', response)
+                  alert(`${response.account} 님 환영합니다.`)
+              }
               return true
           } else {
               this.loginErrorAlertBool = true
