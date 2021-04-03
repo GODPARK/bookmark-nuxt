@@ -22,12 +22,12 @@
                                 </v-icon>
                                 {{ hash.hashName }}
                                 <v-spacer />
-                                <v-icon small>
+                                <!-- <v-icon small>
                                     mdi-earth
                                 </v-icon>
                                 <v-icon small>
                                     mdi-lock
-                                </v-icon>
+                                </v-icon> -->
                             </v-card-title>
                         </v-card>
                     </v-hover>

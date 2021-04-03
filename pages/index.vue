@@ -70,9 +70,9 @@ export default {
     },
     mainHashCardHeight () {
       switch (this.$vuetify.breakpoint.name) {
-        case 'xs': return 200
-        case 'sm': return 350
-        case 'md': return 350
+        case 'xs': return 300
+        case 'sm': return 400
+        case 'md': return 400
         case 'lg': return this.$vuetify.breakpoint.height - 100
         case 'xl': return this.$vuetify.breakpoint.height - 100
       }

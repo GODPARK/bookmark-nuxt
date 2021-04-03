@@ -30,7 +30,7 @@
                                         mdi-book-edit-outline
                                     </v-icon>
                                 </v-btn>
-                                <v-btn text small>
+                                <v-btn text small @click="clickDeleteBookmark(bookmark)">
                                     <v-icon>
                                         mdi-trash-can
                                     </v-icon>
@@ -84,6 +84,9 @@ export default {
       clickEditBookmark (bookmark) {
           this.$store.commit('view-bookmark/setSelectedBookmark', bookmark)
           this.$refs.bookamrkDialog.openBookmarkDialogFunc()
+      },
+      clickDeleteBookmark (bookmark) {
+          console.log(bookmark)
       }
   }
 }

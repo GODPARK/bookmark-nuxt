@@ -26,6 +26,16 @@ export const actions = {
             console.log('bookmark freqeucy api is fail')
         }
     },
+    async deleteBookmark (context, body) {
+        let data = {}
+        try {
+            await this.$axios.setHeader('auth_token', context.rootGetters['auth/getToken'])
+            data = await this.$axios.$delete('/api/v1/bookmark', body)
+        } catch (err) {
+            data.err = 'delete bookmark is fail'
+        }
+        return data
+    },
     async editBookmark (context, body) {
         let data = {}
         try {
