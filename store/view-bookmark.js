@@ -32,6 +32,14 @@ export const mutations = {
     clearBookmarkList (state) {
         state.bookmarkList = []
     },
+    deleteBookmarkInList (state, value) {
+        const idx = state.bookmarkList.findIndex((element) => {
+            return element.bookmarkId === value.bookmarkId
+        })
+        if (idx !== -1) {
+            state.bookmarkList.splice(idx, 1)
+        }
+    },
     setSelectedBookmark (state, value) {
         state.selectedBookmark = value
     }

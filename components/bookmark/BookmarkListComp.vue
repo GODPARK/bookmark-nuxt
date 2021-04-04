@@ -86,7 +86,8 @@ export default {
           this.$refs.bookamrkDialog.openBookmarkDialogFunc()
       },
       clickDeleteBookmark (bookmark) {
-          console.log(bookmark)
+          this.$store.dispatch('api-v1-bookmark/deleteBookmark', bookmark.bookmarkId)
+          this.$store.commit('view-bookmark/deleteBookmarkInList', bookmark)
       }
   }
 }
