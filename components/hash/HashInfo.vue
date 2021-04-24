@@ -5,10 +5,21 @@
             <h3> {{ selectedHashComp.hashName }} </h3>
           </v-toolbar-title>
           <v-spacer />
-          <v-btn v-if="controlMain" small text :color="selectedHashColorComp">
+          <v-btn
+            v-if="controlMain"
+            small
+            text
+            :color="selectedHashColorComp"
+            @click="editHashMainFunc()"
+          >
             <v-icon>mdi-star</v-icon>
           </v-btn>
-          <v-btn v-if="controlDelete" small text>
+          <v-btn
+            v-if="controlDelete"
+            small
+            text
+            @click="deleteHashFunc()"
+          >
             <v-icon>mdi-trash-can</v-icon>
           </v-btn>
       </v-toolbar>
@@ -34,23 +45,48 @@ export default {
     }
   },
   computed: {
-      selectedHashComp () {
-        return this.$store.getters['view-hash/getSelectedHash']
-      },
-      isEmptySeletedHashComp () {
-        return this.$store.getters['view-hash/isEmptySelectedHash']
-      },
-      selectedHashColorComp () {
-          if (this.$store.getters['view-hash/getSelectedHash'].hashMain === 1) {
-              return 'amber'
-          } else {
-              return 'indigo'
-          }
+    selectedHashComp () {
+      return this.$store.getters['view-hash/getSelectedHash']
+    },
+    isEmptySeletedHashComp () {
+      return this.$store.getters['view-hash/isEmptySelectedHash']
+    },
+    selectedHashColorComp () {
+      if (this.$store.getters['view-hash/getSelectedHash'].hashMain === 1) {
+          return 'amber'
+      } else {
+          return 'indigo'
       }
+    }
   },
   mounted () {
   },
   methods: {
+    async editHashMainFunc () {
+      const body = {
+        hashId: this.selectedHashComp.hashId,
+        hashName: this.selectedHashComp.hashName,
+        hashMain: 0
+      }
+      if (this.selectedHashComp.hashMain === 1) {
+        body.hashMain = 0
+      } else if (this.selectedHashComp.hashMain === 0) {
+        body.hashMain = 1
+      }
+      const result = await this.$store.dispatch('api-v1-hash/editHash', body)
+      const hashList = await this.$store.dispatch('api-v1-hash/mainHash')
+      this.$store.commit('view-hash/setHashList', hashList)
+      this.$store.commit('view-hash/setSelectedHash', result)
+    },
+    async deleteHashFunc () {
+      if (confirm(`${this.selectedHashComp.hashName} 를 삭제하시겠습니까?`)) {
+        await this.$store.dispatch('api-v1-hash/deleteHash', this.selectedHashComp.hashId)
+        this.$store.commit('view-hash/clearSelectedHash')
+        const hashList = await this.$store.dispatch('api-v1-hash/mainHash')
+        this.$store.commit('view-hash/setHashList', hashList)
+        this.$store.commit('view-bookmark/clearBookmarkList')
+      }
+    }
   }
 }
 </script>

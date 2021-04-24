@@ -12,18 +12,19 @@ export const actions = {
         let data = {}
         try {
             await this.$axios.setHeader('auth_token', context.rootGetters['auth/getToken'])
-            data = await this.$axios.$get(`/api/v1/bookmark/hash?hashId=${hashId}`)
+            data = await this.$axios.$get(`/api/v1/bookmark/hash/${hashId}`)
         } catch (err) {
             data.error = 'get bookmark by hash fail'
         }
         return data
     },
     async frequencyBookmark (context, bookmarkId) {
+        const data = {}
         try {
             await this.$axios.setHeader('auth_token', context.rootGetters['auth/getToken'])
             await this.$axios.$get(`/api/v1/bookmark/freq?bookmarkId=${bookmarkId}`)
         } catch (err) {
-            console.log('bookmark freqeucy api is fail')
+            data.error = 'bookmark freqeucy api is fail'
         }
     },
     async deleteBookmark (context, body) {

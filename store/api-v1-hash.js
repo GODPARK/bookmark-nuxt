@@ -22,7 +22,7 @@ export const actions = {
         let data = {}
         try {
             await this.$axios.setHeader('auth_token', context.rootGetters['auth/getToken'])
-            data = await this.$axios.$get(`/api/v1/hash/bookmark?bookmarkId=${bookmarkId}`)
+            data = await this.$axios.$get(`/api/v1/hash/bookmark/${bookmarkId}`)
         } catch (err) {
             data.error = 'get hash by bookmarkid fail'
         }
@@ -39,12 +39,42 @@ export const actions = {
         return data
     },
     async hashEditInBookmark (context, body) {
-        const data = {}
+        let data = {}
         try {
             await this.$axios.setHeader('auth_token', context.rootGetters['auth/getToken'])
-            await this.$axios.$patch('/api/v1/hash/map', body)
+            data = await this.$axios.$patch('/api/v1/hash/map', body)
         } catch (err) {
             data.error = 'edit hash is fail'
+        }
+        return data
+    },
+    async saveHash (context, body) {
+        let data = {}
+        try {
+            await this.$axios.setHeader('auth_token', context.rootGetters['auth/getToken'])
+            data = await this.$axios.$post('/api/v1/hash', body)
+        } catch (err) {
+            data.error = 'save hash is fail'
+        }
+        return data
+    },
+    async editHash (context, body) {
+        let data = {}
+        try {
+            await this.$axios.setHeader('auth_token', context.rootGetters['auth/getToken'])
+            data = await this.$axios.$patch('/api/v1/hash', body)
+        } catch (err) {
+            data.error = 'edit hash is fail'
+        }
+        return data
+    },
+    async deleteHash (context, hashId) {
+        let data = {}
+        try {
+            await this.$axios.setHeader('auth_token', context.rootGetters['auth/getToken'])
+            data = await this.$axios.$delete(`/api/v1/hash/${hashId}`)
+        } catch (err) {
+            data.error = 'delete hash is fail'
         }
         return data
     }

@@ -11,6 +11,8 @@
                 v-model="newBookmark.bookmarkName"
                 label="Bookmark Name"
                 prepend-icon="mdi-book"
+                :error="!validationBookmarkNameComp"
+                :success="validationBookmarkNameComp"
               />
             </v-col>
             <v-col cols="12">
@@ -18,6 +20,8 @@
                 v-model="newBookmark.url"
                 label="Bookmark Url"
                 prepend-icon="mdi-web-box"
+                :error="!validationBookmarkUrlComp"
+                :success="validationBookmarkUrlComp"
               />
             </v-col>
             <v-col cols="12">
@@ -74,7 +78,22 @@ export default {
       hashKeyOptionList: []
     }
   },
-  computed: {},
+  computed: {
+    validationBookmarkNameComp () {
+      if (this.newBookmark.bookmarkName !== undefined && this.newBookmark.bookmarkName !== '') {
+        return true
+      }
+      return false
+    },
+    validationBookmarkUrlComp () {
+      if (this.newBookmark.url !== undefined && this.newBookmark.url !== '') {
+        if (this.newBookmark.url.includes('https://') || this.newBookmark.url.includes('http://')) {
+          return true
+        }
+      }
+      return false
+    }
+  },
   mounted () {
   },
   methods: {
@@ -111,12 +130,14 @@ export default {
       }
     },
     async saveNewBookmarkFunc () {
-      const body = {
-        bookmark: this.newBookmark,
-        hashKeyList: this.allocateHashKeyList
+      if (this.validationBookmarkNameComp && this.validationBookmarkUrlComp) {
+        const body = {
+          bookmark: this.newBookmark,
+          hashKeyList: this.allocateHashKeyList
+        }
+        await this.$store.dispatch('api-v1-bookmark/saveBookmark', body)
+        this.clearTextFormatFunc()
       }
-      await this.$store.dispatch('api-v1-bookmark/saveBookmark', body)
-      this.clearTextFormatFunc()
     },
     clearTextFormatFunc () {
       this.newBookmark.bookmarkName = ''

@@ -19,7 +19,7 @@
           </v-card>
         </v-col>
         <v-col>
-          <hash-info class="hash-card-class" />
+          <hash-info class="hash-card-class" :control-main="true" />
           <v-card
             v-if="!isEmptyMainBookmarkList"
             :height="mainBookmarkCardHeight"
@@ -101,6 +101,8 @@ export default {
     } else {
       this.getMainHashListFunc()
     }
+    this.$store.commit('view-bookmark/clearBookmarkList')
+    this.$store.commit('view-hash/clearSelectedHash')
   },
   methods: {
     async getMainHashListFunc () {

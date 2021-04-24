@@ -86,8 +86,10 @@ export default {
           this.$refs.bookamrkDialog.openBookmarkDialogFunc()
       },
       clickDeleteBookmark (bookmark) {
-          this.$store.dispatch('api-v1-bookmark/deleteBookmark', bookmark.bookmarkId)
-          this.$store.commit('view-bookmark/deleteBookmarkInList', bookmark)
+          if (confirm(`${bookmark.bookmarkName} 를 삭제하시겠습니까?`)) {
+            this.$store.dispatch('api-v1-bookmark/deleteBookmark', bookmark.bookmarkId)
+            this.$store.commit('view-bookmark/deleteBookmarkInList', bookmark)
+          }
       }
   }
 }

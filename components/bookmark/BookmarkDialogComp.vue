@@ -145,12 +145,10 @@ export default {
       },
       async saveEditBookmarkFunc () {
           const bookmarkBody = {
-              bookmark: {
-                  bookmarkId: this.editBookmark.bookmarkId,
-                  bookmarkName: this.editBookmark.bookmarkName,
-                  url: this.editBookmark.url,
-                  bookmarkInfo: this.editBookmark.bookmarkInfo
-              }
+                bookmarkId: this.editBookmark.bookmarkId,
+                bookmarkName: this.editBookmark.bookmarkName,
+                url: this.editBookmark.url,
+                bookmarkInfo: this.editBookmark.bookmarkInfo
           }
           await this.$store.dispatch('api-v1-bookmark/editBookmark', bookmarkBody)
           const hashBody = {

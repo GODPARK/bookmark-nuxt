@@ -55,8 +55,6 @@ export default {
       }
     },
     async selectHashInTreeFunc (node) {
-    //   const lowerCaseName = node.hashName.toLowerCase()
-        console.log(node)
         const data = await this.$store.dispatch('api-v1-bookmark/bookmarkByHash', node.hashId)
         this.$store.commit('view-bookmark/setBookmarkList', data)
         this.$store.commit('view-hash/setSelectedHash', node)
@@ -75,7 +73,6 @@ export default {
     async findUnmappedBookmark () {
       this.$store.commit('view-hash/clearSelectedHash')
       const data = await this.$store.dispatch('api-v1-bookmark/unmappedBookmark')
-      console.log(data)
       this.$store.commit('view-bookmark/setBookmarkList', data)
     }
   }
