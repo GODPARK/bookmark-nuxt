@@ -28,18 +28,28 @@ export default {
     }
   },
   computed: {
-      newCardCols () {
-        switch (this.$vuetify.breakpoint.name) {
-            case 'xs': return 12
-            case 'sm': return 12
-            case 'md': return 12
-            case 'lg': return 6
-            case 'xl': return 6
-      }
-      return 12
-      }
+    newCardCols () {
+    switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return 12
+        case 'sm': return 12
+        case 'md': return 12
+        case 'lg': return 6
+        case 'xl': return 6
+    }
+    return 12
+    },
+    isLoginComp () {
+        if (this.$store.getters['auth/getToken']) {
+            return false
+        } else {
+            return true
+        }
+    }
   },
   mounted () {
+    if (this.isLoginComp) {
+      this.$router.push('/login')
+    }
   },
   methods: {
   }

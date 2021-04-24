@@ -55,5 +55,15 @@ export const actions = {
             data.err = 'save new bookmark is fail'
         }
         return data
+    },
+    async unmappedBookmark (context) {
+        let data = {}
+        try {
+            await this.$axios.setHeader('auth_token', context.rootGetters['auth/getToken'])
+            data = await this.$axios.$get('/api/v1/bookmark/unmapped')
+        } catch (err) {
+            data.err = 'save new bookmark is fail'
+        }
+        return data
     }
 }
