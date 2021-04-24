@@ -53,36 +53,44 @@
                 <v-text-field
                     v-model="signUpObject.account"
                     class="text-form-class"
-                    :counter="10"
+                    :counter="12"
                     label="Account"
                     required
                     prepend-icon="mdi-account-circle"
+                    :error="!validationAccountComp"
+                    :success="validationAccountComp"
                 />
                 <v-text-field
                     v-model="signUpObject.name"
                     class="text-form-class"
-                    :counter="10"
+                    :counter="12"
                     label="Name ( 성함 )"
                     required
                     prepend-icon="mdi-account-circle"
+                    :error="!validationNameComp"
+                    :success="validationNameComp"
                 />
                 <v-text-field
                     v-model="signUpObject.f_password"
                     class="text-form-class"
-                    :counter="10"
+                    :counter="12"
                     label="비밀번호"
                     type="password"
                     required
                     prepend-icon="mdi-lock"
+                    :error="!validationFirstPasswordComp"
+                    :success="validationFirstPasswordComp"
                 />
                 <v-text-field
                     v-model="signUpObject.s_password"
                     class="text-form-class"
-                    :counter="10"
+                    :counter="12"
                     label="비밀번호 확인"
                     type="password"
                     required
                     prepend-icon="mdi-lock"
+                    :error="!validationSecondPasswordComp"
+                    :success="validationSecondPasswordComp"
                 />
                 <v-card-actions>
                     <v-btn @click="closeDialogFunc()">
@@ -123,6 +131,38 @@ export default {
   },
   computed: {
       // TODO: valid 기능 추가
+      validationAccountComp () {
+          if (this.signUpObject.account !== undefined && this.signUpObject.account !== '') {
+              if (this.signUpObject.account.length <= 12) {
+                  return true
+              }
+          }
+          return false
+      },
+      validationNameComp () {
+          if (this.signUpObject.name !== undefined && this.signUpObject.name !== '') {
+              if (this.signUpObject.name.length <= 12) {
+                  return true
+              }
+          }
+          return false
+      },
+      validationFirstPasswordComp () {
+          if (this.signUpObject.f_password !== undefined && this.signUpObject.f_password !== '') {
+              if (this.signUpObject.f_password.length <= 12) {
+                  return true
+              }
+          }
+          return false
+      },
+      validationSecondPasswordComp () {
+          if (this.signUpObject.s_password !== undefined && this.signUpObject.s_password !== '') {
+            if (this.signUpObject.f_password === this.signUpObject.s_password) {
+                return true
+            }
+          }
+          return false
+      }
   },
   mounted () {
   },
@@ -144,12 +184,18 @@ export default {
       },
       async signUpFunc () {
         this.signUpObject.agree = await this.signUpAgreeBool ? 1 : 0
-          const response = await this.$store.dispatch('api-v1-auth/signUp', this.signUpObject)
-          if (!response.error) {
-             alert('회원 가입에 성공하셨습니다.')
-          }
-          await this.clearDialogFunc()
-          await this.closeDialogFunc()
+        if (this.signUpObject.agree === 1) {
+            if (this.validationAccountComp && this.validationNameComp && this.validationFirstPasswordComp && this.validationSecondPasswordComp) {
+                const response = await this.$store.dispatch('api-v1-auth/signUp', this.signUpObject)
+                if (!response.error) {
+                   alert('회원 가입에 성공하셨습니다.')
+                }
+                await this.clearDialogFunc()
+                await this.closeDialogFunc()
+            }
+        } else {
+            alert('동의가 필요합니다.')
+        }
       }
   }
 }

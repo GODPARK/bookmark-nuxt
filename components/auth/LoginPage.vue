@@ -4,14 +4,14 @@
         <v-text-field
             v-model="account"
             class="text-form-class"
-            :counter="10"
+            :counter="12"
             label="Account"
             required
         />
         <v-text-field
             v-model="password"
             class="text-form-class"
-            :counter="10"
+            :counter="12"
             label="Password"
             type="password"
             required
@@ -20,6 +20,7 @@
     </div>
 </template>
 <script>
+
 export default {
   name: 'LoginPage',
   components: {

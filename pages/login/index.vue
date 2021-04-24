@@ -17,6 +17,11 @@
                         </v-alert>
                         <login-page ref="login" />
                         <v-card-actions>
+                            <v-btn
+                                @click="openSignUpDialogFunc()"
+                            >
+                                sign up
+                            </v-btn>
                             <v-spacer />
                             <v-btn @click="loginActionFunc()" @keydown.enter="loginActionFunc()">
                                 login
@@ -26,15 +31,18 @@
                 </v-col>
             </v-row>
         </v-container>
+        <bm-auth-sign-up-dialog ref="signUp" />
     </div>
 </template>
 <script>
 import LoginPage from '../../components/auth/LoginPage'
+import BmAuthSignUpDialog from '../../components/auth/SignUpDialog'
 
 export default {
   name: 'Login',
   components: {
-      LoginPage
+      LoginPage,
+      BmAuthSignUpDialog
   },
   props: [],
   data () {
@@ -56,6 +64,9 @@ export default {
           if (result) {
             await this.$router.push('/')
           }
+      },
+      openSignUpDialogFunc () {
+        this.$refs.signUp.openDialogFunc()
       }
   }
 }
