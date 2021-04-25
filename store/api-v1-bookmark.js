@@ -22,7 +22,7 @@ export const actions = {
         const data = {}
         try {
             await this.$axios.setHeader('auth_token', context.rootGetters['auth/getToken'])
-            await this.$axios.$get(`/api/v1/bookmark/freq?bookmarkId=${bookmarkId}`)
+            await this.$axios.$get(`/api/v1/bookmark/${bookmarkId}/freq`)
         } catch (err) {
             data.error = 'bookmark freqeucy api is fail'
         }
