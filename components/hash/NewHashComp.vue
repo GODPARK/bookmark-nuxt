@@ -1,6 +1,9 @@
 <template>
     <div>
-      <v-card>
+      <v-card
+        outlined
+        elevation="4"
+      >
         <v-card-title>
           New Hash
         </v-card-title>

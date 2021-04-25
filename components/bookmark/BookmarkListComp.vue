@@ -12,7 +12,9 @@
                         close-delay="100"
                     >
                         <v-card
-                            :elevation="hover ? 8 : 3"
+                            :elevation="hover ? 10 : 4"
+                            :color="hover ? 'lime lighten-5' : ''"
+                            outlined
                         >
                             <div class="bookmark-card-title">
                                 <v-card-title @click="clickBookmark(bookmark)">

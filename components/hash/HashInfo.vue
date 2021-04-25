@@ -1,6 +1,6 @@
 <template>
     <div>
-      <v-toolbar v-if="isEmptySeletedHashComp">
+      <v-toolbar v-if="isEmptySeletedHashComp" color="light-green lighten-4">
           <v-toolbar-title class="selected-hash-title">
             <h3> {{ selectedHashComp.hashName }} </h3>
           </v-toolbar-title>

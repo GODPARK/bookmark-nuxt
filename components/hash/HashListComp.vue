@@ -13,14 +13,16 @@
                     >
                         <v-card
                             :elevation="hover ? 8 : 3"
+                            :color="hover ? 'light-green lighten-5' : ''"
                             shaped
+                            outlined
                             @click="clickHashFunc(hash)"
                         >
                             <v-card-title class="text-subtitle-1">
                                 <v-icon class="hash-title-icon">
                                     mdi-pound-box
                                 </v-icon>
-                                {{ hash.hashName }}
+                                <strong> {{ hash.hashName }} </strong>
                                 <v-spacer />
                                 <!-- <v-icon small>
                                     mdi-earth

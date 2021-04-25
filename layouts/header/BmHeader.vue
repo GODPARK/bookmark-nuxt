@@ -2,9 +2,15 @@
     <div>
         <bm-main-nav ref="mainNav" />
         <bm-sub-nav ref="subNav" />
-        <v-app-bar dense>
+        <v-app-bar
+            color="grey lighten-1"
+            dense
+        >
             <v-app-bar-nav-icon @click="mainNavControlFunc()" />
-            <v-toolbar-title v-text="title" />
+            <v-toolbar-title>
+                <v-icon> mdi-bookshelf </v-icon>
+                <strong>{{ title }}</strong>
+            </v-toolbar-title>
             <v-spacer />
             <v-btn
                 text

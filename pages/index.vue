@@ -7,6 +7,7 @@
             :height="mainHashCardHeight"
             class="main-card-view"
             :loading="mainHashLoadingBool"
+            elevation="2"
             outlined
           >
             <hash-list-comp />
@@ -18,7 +19,7 @@
             v-if="!isEmptyMainBookmarkList"
             :height="mainBookmarkCardHeight"
             class="main-card-view"
-            outlined
+            elevation="0"
           >
             <bookmark-list-comp />
           </v-card>

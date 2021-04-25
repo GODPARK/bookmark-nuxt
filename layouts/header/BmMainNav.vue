@@ -10,7 +10,7 @@
                 @click.stop="navMiniControlFunc()"
             >
                 <v-icon>
-                    {{ navMiniBool ? 'mdi-right' : 'mdi-left' }}
+                    {{ navMiniBool ? 'mdi-chevron-right' : 'mdi-chevron-left' }}
                 </v-icon>
             </v-btn>
             <v-list>
