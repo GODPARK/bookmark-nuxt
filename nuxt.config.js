@@ -3,6 +3,7 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   server: {
+    // port: 80,
     port: 8080,
     host: '0.0.0.0'
   },
@@ -49,8 +50,8 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // baseURL: 'http://bookmark-api.godpark.pe.kr:11111'
-    baseURL: 'http://192.168.0.2:11111'
+    baseURL: 'http://bookmark-api.godpark.pe.kr:11111'
+    // baseURL: 'http://192.168.0.2:11111'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
