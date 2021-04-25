@@ -3,7 +3,27 @@
       <v-container>
       <v-row>
         <v-col>
-          <hash-search-comp />
+          <v-card
+            class="mb-2"
+          >
+            <v-tabs
+              v-model="searchTabNumber"
+              fixed-tabs
+            >
+              <v-tab @click="clearBookmarkAndHash()">
+                Hash
+              </v-tab>
+              <v-tab @click="clearBookmarkAndHash()">
+                Bookmark
+              </v-tab>
+            </v-tabs>
+          </v-card>
+            <div v-if="searchTabNumber === 0">
+              <hash-search-comp />
+            </div>
+            <div v-else-if="searchTabNumber === 1">
+              <bookmark-search-comp />
+            </div>
         </v-col>
       </v-row>
       <v-row>
@@ -23,17 +43,20 @@
 import HashSearchComp from '../../components/hash/HashSearchComp'
 import HashInfo from '../../components/hash/HashInfo'
 import BookmarkListComp from '../../components/bookmark/BookmarkListComp'
+import BookmarkSearchComp from '../../components/bookmark/BookmarkSearchComp'
 
 export default {
   name: 'Search',
   components: {
     HashSearchComp,
     BookmarkListComp,
+    BookmarkSearchComp,
     HashInfo
   },
   props: [],
   data () {
     return {
+      searchTabNumber: 0
     }
   },
   computed: {
@@ -49,10 +72,13 @@ export default {
     if (this.isLoginComp) {
       this.$router.push('/login')
     }
-    this.$store.commit('view-bookmark/clearBookmarkList')
-    this.$store.commit('view-hash/clearSelectedHash')
+    this.clearBookmarkAndHash()
   },
   methods: {
+    clearBookmarkAndHash () {
+      this.$store.commit('view-bookmark/clearBookmarkList')
+      this.$store.commit('view-hash/clearSelectedHash')
+    }
   }
 }
 </script>

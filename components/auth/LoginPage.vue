@@ -34,7 +34,8 @@ export default {
         loginErrorAlertBool: false
     }
   },
-  computed: {},
+  computed: {
+  },
   mounted () {
   },
   methods: {
@@ -49,6 +50,8 @@ export default {
                   await this.$store.commit('auth/setToken', response)
                   await this.$store.commit('auth/setAccount', response)
                   alert(`${response.account} 님 환영합니다.`)
+              } else if (response.error !== undefined) {
+                  alert('로그인 정보를 다시 확인 부탁드립니다.')
               }
               return true
           } else {

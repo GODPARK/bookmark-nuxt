@@ -79,8 +79,13 @@ export default {
     },
     async saveNewHashFunc () {
       if (this.validationHashNameComp) {
-        await this.$store.dispatch('api-v1-hash/saveHash', this.newHash)
-        this.clearNewHash()
+        const result = await this.$store.dispatch('api-v1-hash/saveHash', this.newHash)
+        if (result.error === undefined) {
+          this.$store.commit('view-snackbar/setSnackBarTextStringWithSuccess', `${this.newHash.hashName} is SAVE!`)
+          this.clearNewHash()
+        } else {
+          this.$store.commit('view-snackbar/setSnackBarTextStringWithError', result.error)
+        }
       }
     }
   }

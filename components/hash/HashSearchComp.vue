@@ -2,7 +2,7 @@
     <div>
       <v-card>
           <v-card-title>
-              Search
+              Search Hash
           </v-card-title>
           <v-row>
               <v-col>

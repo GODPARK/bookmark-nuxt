@@ -13,6 +13,14 @@
                 <v-icon>{{ sudNavIcon }}</v-icon>
             </v-btn>
         </v-app-bar>
+        <v-snackbar
+            v-model="snackBarControlBool"
+            :timeout="snackBarTimeoutNumber"
+            outlined
+            :color="snackBarColorComp"
+        >
+            {{ snackBarTextStringComp }}
+        </v-snackbar>
     </div>
 </template>
 <script>
@@ -29,10 +37,25 @@ export default {
   data () {
     return {
         title: 'Bookmark',
-        sudNavIcon: 'mdi-account'
+        sudNavIcon: 'mdi-account',
+        snackBarControlBool: false,
+        snackBarTimeoutNumber: 2000
     }
   },
   computed: {
+      snackBarColorComp () {
+          return this.$store.getters['view-snackbar/getSnackBarResultString']
+      },
+      snackBarTextStringComp () {
+          return this.$store.getters['view-snackbar/getSnackBarTextString']
+      }
+  },
+  watch: {
+      snackBarTextStringComp (before, after) {
+          if (before !== after) {
+              this.snackBarControlBool = true
+          }
+      }
   },
   mounted () {
   },

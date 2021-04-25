@@ -7,7 +7,7 @@ export const actions = {
         try {
             data = await this.$axios.$post('/api/v1/auth/sign-in', body)
         } catch (err) {
-            alert(err)
+            data.error = 'login is fail'
         }
         return data
     },
@@ -28,7 +28,7 @@ export const actions = {
             this.$axios.setHeader('auth_token', context.rootState.auth.tokenStr)
             data = await this.$axios.$post('/api/v1/auth/logout')
         } catch (err) {
-            console.log(err)
+            data.error = 'logout is fail'
         }
         return data
     }

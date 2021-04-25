@@ -144,24 +144,33 @@ export default {
           })
       },
       async saveEditBookmarkFunc () {
-          const bookmarkBody = {
-                bookmarkId: this.editBookmark.bookmarkId,
-                bookmarkName: this.editBookmark.bookmarkName,
-                url: this.editBookmark.url,
-                bookmarkInfo: this.editBookmark.bookmarkInfo
-          }
-          await this.$store.dispatch('api-v1-bookmark/editBookmark', bookmarkBody)
-          const hashBody = {
-              bookmarkId: this.editBookmark.bookmarkId,
-              hashKeyList: this.allocatedHashList
-          }
-          await this.$store.dispatch('api-v1-hash/hashEditInBookmark', hashBody)
-          const selectedHash = this.$store.getters['view-hash/getSelectedHash']
-          if (selectedHash.hashId !== undefined) {
-              const refreshList = await this.$store.dispatch('api-v1-bookmark/bookmarkByHash', selectedHash.hashId)
-              this.$store.commit('view-bookmark/setBookmarkList', refreshList)
-          }
-          this.closeBookmarkDialogFunc()
+        const bookmarkBody = {
+            bookmarkId: this.editBookmark.bookmarkId,
+            bookmarkName: this.editBookmark.bookmarkName,
+            url: this.editBookmark.url,
+            bookmarkInfo: this.editBookmark.bookmarkInfo
+        }
+        const bookmarkResult = await this.$store.dispatch('api-v1-bookmark/editBookmark', bookmarkBody)
+        if (bookmarkResult.error !== undefined) {
+        this.$store.commit('view-snackbar/setSnackBarTextStringWithError', bookmarkResult.error)
+        }
+        const hashBody = {
+            bookmarkId: this.editBookmark.bookmarkId,
+            hashKeyList: this.allocatedHashList
+        }
+        const hashResult = await this.$store.dispatch('api-v1-hash/hashEditInBookmark', hashBody)
+        if (hashResult.error !== undefined) {
+        this.$store.commit('view-snackbar/setSnackBarTextStringWithError', hashResult.error)
+        }
+        const selectedHash = this.$store.getters['view-hash/getSelectedHash']
+        if (selectedHash.hashId !== undefined) {
+            const refreshList = await this.$store.dispatch('api-v1-bookmark/bookmarkByHash', selectedHash.hashId)
+            this.$store.commit('view-bookmark/setBookmarkList', refreshList)
+        }
+        if (bookmarkResult.error === undefined && hashResult.error === undefined) {
+            this.$store.commit('view-snackbar/setSnackBarTextStringWithSuccess', `${this.editBookmark.bookmarkName} EDIT!`)
+            this.closeBookmarkDialogFunc()
+        }
       }
   }
 }

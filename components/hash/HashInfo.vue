@@ -74,17 +74,31 @@ export default {
         body.hashMain = 1
       }
       const result = await this.$store.dispatch('api-v1-hash/editHash', body)
-      const hashList = await this.$store.dispatch('api-v1-hash/mainHash')
-      this.$store.commit('view-hash/setHashList', hashList)
-      this.$store.commit('view-hash/setSelectedHash', result)
+      if (result.error === undefined) {
+        if (result.hashMain === 1) {
+          this.$store.commit('view-snackbar/setSnackBarTextStringWithSuccess', `${result.hashName} In Main!`)
+        } else if (result.hashMain === 0) {
+          this.$store.commit('view-snackbar/setSnackBarTextStringWithSuccess', `${result.hashName} Out Main!`)
+        }
+        const hashList = await this.$store.dispatch('api-v1-hash/mainHash')
+        this.$store.commit('view-hash/setHashList', hashList)
+        this.$store.commit('view-hash/setSelectedHash', result)
+      } else {
+        this.$store.commit('view-snackbar/setSnackBarTextStringWithError', result.error)
+      }
     },
     async deleteHashFunc () {
       if (confirm(`${this.selectedHashComp.hashName} 를 삭제하시겠습니까?`)) {
-        await this.$store.dispatch('api-v1-hash/deleteHash', this.selectedHashComp.hashId)
-        this.$store.commit('view-hash/clearSelectedHash')
-        const hashList = await this.$store.dispatch('api-v1-hash/mainHash')
-        this.$store.commit('view-hash/setHashList', hashList)
-        this.$store.commit('view-bookmark/clearBookmarkList')
+        const result = await this.$store.dispatch('api-v1-hash/deleteHash', this.selectedHashComp.hashId)
+        if (result.error === undefined) {
+          this.$store.commit('view-snackbar/setSnackBarTextStringWithSuccess', `${this.selectedHashComp.hashName} DELETE!`)
+          this.$store.commit('view-hash/clearSelectedHash')
+          const hashList = await this.$store.dispatch('api-v1-hash/mainHash')
+          this.$store.commit('view-hash/setHashList', hashList)
+          this.$store.commit('view-bookmark/clearBookmarkList')
+        } else {
+          this.$store.commit('view-snackbar/setSnackBarTextStringWithError', result.error)
+        }
       }
     }
   }

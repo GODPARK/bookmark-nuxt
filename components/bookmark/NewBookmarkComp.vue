@@ -135,8 +135,13 @@ export default {
           bookmark: this.newBookmark,
           hashKeyList: this.allocateHashKeyList
         }
-        await this.$store.dispatch('api-v1-bookmark/saveBookmark', body)
-        this.clearTextFormatFunc()
+        const result = await this.$store.dispatch('api-v1-bookmark/saveBookmark', body)
+        if (result.error === undefined) {
+          this.$store.commit('view-snackbar/setSnackBarTextStringWithSuccess', `${this.newBookmark.bookmarkName} SAVE!`)
+          this.clearTextFormatFunc()
+        } else {
+          this.$store.commit('view-snackbar/setSnackBarTextStringWithError', result.error)
+        }
       }
     },
     clearTextFormatFunc () {

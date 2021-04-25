@@ -33,7 +33,7 @@ export const actions = {
             await this.$axios.setHeader('auth_token', context.rootGetters['auth/getToken'])
             data = await this.$axios.$delete(`/api/v1/bookmark/${body}`)
         } catch (err) {
-            data.err = 'delete bookmark is fail'
+            data.error = 'delete bookmark is fail'
         }
         return data
     },
@@ -43,7 +43,7 @@ export const actions = {
             await this.$axios.setHeader('auth_token', context.rootGetters['auth/getToken'])
             data = await this.$axios.$patch('/api/v1/bookmark', body)
         } catch (err) {
-            data.err = 'edit bookmark is fail'
+            data.error = 'edit bookmark is fail'
         }
         return data
     },
@@ -53,7 +53,7 @@ export const actions = {
             await this.$axios.setHeader('auth_token', context.rootGetters['auth/getToken'])
             data = await this.$axios.$post('/api/v1/bookmark', body)
         } catch (err) {
-            data.err = 'save new bookmark is fail'
+            data.error = 'save new bookmark is fail'
         }
         return data
     },
@@ -63,7 +63,17 @@ export const actions = {
             await this.$axios.setHeader('auth_token', context.rootGetters['auth/getToken'])
             data = await this.$axios.$get('/api/v1/bookmark/unmapped')
         } catch (err) {
-            data.err = 'save new bookmark is fail'
+            data.error = 'save new bookmark is fail'
+        }
+        return data
+    },
+    async searchBookmarkByName (context, bookmarkName) {
+        let data = {}
+        try {
+            await this.$axios.setHeader('auth_token', context.rootGetters['auth/getToken'])
+            data = await this.$axios.$get(`/api/v1/bookmark/search?bookmark=${bookmarkName}`)
+        } catch (err) {
+            data.error = 'save new bookmark is fail'
         }
         return data
     }

@@ -85,10 +85,15 @@ export default {
           this.$store.commit('view-bookmark/setSelectedBookmark', bookmark)
           this.$refs.bookamrkDialog.openBookmarkDialogFunc()
       },
-      clickDeleteBookmark (bookmark) {
+      async clickDeleteBookmark (bookmark) {
           if (confirm(`${bookmark.bookmarkName} 를 삭제하시겠습니까?`)) {
-            this.$store.dispatch('api-v1-bookmark/deleteBookmark', bookmark.bookmarkId)
-            this.$store.commit('view-bookmark/deleteBookmarkInList', bookmark)
+            const result = await this.$store.dispatch('api-v1-bookmark/deleteBookmark', bookmark.bookmarkId)
+            if (result.error === undefined) {
+                this.$store.commit('view-snackbar/setSnackBarTextStringWithSuccess', `${bookmark.bookmarkName} DELETE!`)
+                this.$store.commit('view-bookmark/deleteBookmarkInList', bookmark)
+            } else {
+                this.$store.commit('view-snackbar/setSnackBarTextStringWithError', result.error)
+            }
           }
       }
   }

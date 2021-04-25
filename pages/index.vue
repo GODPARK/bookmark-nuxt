@@ -9,12 +9,6 @@
             :loading="mainHashLoadingBool"
             outlined
           >
-            <v-card-actions>
-              <v-spacer />
-              <v-btn small text @click="getMainHashListFunc()">
-                <v-icon>mdi-refresh</v-icon>
-              </v-btn>
-            </v-card-actions>
             <hash-list-comp />
           </v-card>
         </v-col>
