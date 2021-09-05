@@ -52,6 +52,7 @@ export default {
   axios: {
     baseURL: 'http://bookmark-api.godpark.pe.kr:11111'
     // baseURL: 'http://192.168.0.2:11111'
+    // baseURL: 'http://localhost:11111'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

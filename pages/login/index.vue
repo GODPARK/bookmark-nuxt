@@ -57,17 +57,22 @@ export default {
   },
   computed: {},
   mounted () {
+    this.wakeUpFunc()
   },
   methods: {
-      async loginActionFunc () {
-          const result = await this.$refs.login.loginFunc()
-          if (result) {
+    async loginActionFunc () {
+        const result = await this.$refs.login.loginFunc()
+        if (result) {
             await this.$router.push('/')
-          }
-      },
-      openSignUpDialogFunc () {
+        }
+    },
+    openSignUpDialogFunc () {
         this.$refs.signUp.openDialogFunc()
-      }
+    },
+    async wakeUpFunc () {
+        const resultWakeup = await this.$store.dispatch('api-v1-statistics/wakeUpApi')
+        console.log(resultWakeup)
+    }
   }
 }
 </script>
